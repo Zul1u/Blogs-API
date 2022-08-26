@@ -1,17 +1,10 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-
-const { JWT_SECRET } = process.env;
+const { createToken } = require('../helpers/token');
 
 module.exports = async (req, res) => {
   const { email, password } = req.body;
 
-  const jwtConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-  };
-
-  const token = jwt.sign({ data: { email, password } }, JWT_SECRET, jwtConfig);
+  const payload = { email, password };
+  const token = createToken(payload);
 
   return res.status(200).json({ token });
 };
