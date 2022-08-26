@@ -1,9 +1,9 @@
 const express = require('express');
-const validateLogin = require('../middlewares/validateLogin');
+const loginValidation = require('../middlewares/loginValidation');
 const loginController = require('../controller/loginController');
 
 const loginRoute = express.Router();
 
-loginRoute.post('/', validateLogin, loginController);
+loginRoute.post('/', loginValidation, loginController);
 
 module.exports = loginRoute;
