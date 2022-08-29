@@ -41,4 +41,18 @@ const categoryVerify = async (req, res, next) => {
   }
 };
 
-module.exports = { bodyValidation, categoryVerify };
+const postIdVerify = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const post = await blogPostService.getByPk(id);
+
+    if (!post) return res.status(404).json({ message: 'Post does not exist' });
+
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { bodyValidation, categoryVerify, postIdVerify };
