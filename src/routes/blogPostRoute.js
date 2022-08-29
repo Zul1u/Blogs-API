@@ -15,4 +15,6 @@ blogPostRoute.post(
   blogPostController.createPost,
 );
 
+blogPostRoute.get('/', blogPostController.getAllPosts);
+
 module.exports = blogPostRoute;

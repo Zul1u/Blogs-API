@@ -1,8 +1,8 @@
-const { BlogPost, PostCategory, Category } = require('../database/models');
+const { BlogPost, PostCategory, Category, User } = require('../database/models');
 
 const categoryVerify = async (categoryId) => {
-  const result = await Category.findByPk(categoryId);
-  return result;
+  const category = await Category.findByPk(categoryId);
+  return category;
 };
 
 const addPostCategory = async ({ categoryIds, postId }) => {
@@ -11,9 +11,19 @@ const addPostCategory = async ({ categoryIds, postId }) => {
 };
 
 const createPost = async ({ userId, title, content, categoryIds }) => {
-  const result = await BlogPost.create({ title, content, userId });
-  addPostCategory({ categoryIds, postId: result.id });
-  return result;
+  const newPost = await BlogPost.create({ title, content, userId });
+  addPostCategory({ categoryIds, postId: newPost.id });
+  return newPost;
 };
 
-module.exports = { createPost, categoryVerify };
+const getAllPosts = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return allPosts;
+};
+
+module.exports = { createPost, categoryVerify, getAllPosts };
