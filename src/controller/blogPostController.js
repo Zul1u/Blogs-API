@@ -49,4 +49,16 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts, getByPk, updatePost };
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await blogPostService.deletePost(id);
+
+    return res.status(204).json();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createPost, getAllPosts, getByPk, updatePost, deletePost };

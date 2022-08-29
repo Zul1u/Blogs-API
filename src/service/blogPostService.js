@@ -40,8 +40,14 @@ const updatePost = async ({ id, title, content }) => {
   await BlogPost.update({ title, content }, { where: { id } });
 
   const updatedPost = await getByPk(id);
-  
+
   return updatedPost;
 };
 
-module.exports = { createPost, categoryVerify, getAllPosts, getByPk, updatePost };
+const deletePost = async (id) => {
+  const result = await BlogPost.destroy({ where: { id } });
+
+  return result;
+};
+
+module.exports = { createPost, categoryVerify, getAllPosts, getByPk, updatePost, deletePost };

@@ -20,10 +20,17 @@ blogPostRoute.get('/:id', blogPostValidation.postIdVerify, blogPostController.ge
 
 blogPostRoute.put(
   '/:id',
-  blogPostValidation.userVerify,
   blogPostValidation.postIdVerify,
+  blogPostValidation.userVerify,
   blogPostValidation.updateBodyValidation,
   blogPostController.updatePost,
+);
+
+blogPostRoute.delete(
+  '/:id',
+  blogPostValidation.postIdVerify,
+  blogPostValidation.userVerify,
+  blogPostController.deletePost,
 );
 
 module.exports = blogPostRoute;
