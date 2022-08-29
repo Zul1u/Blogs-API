@@ -36,4 +36,17 @@ const getByPk = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts, getByPk };
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  try {
+    const updatedPost = await blogPostService.updatePost({ id, title, content });
+
+    return res.status(200).json(updatedPost);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createPost, getAllPosts, getByPk, updatePost };

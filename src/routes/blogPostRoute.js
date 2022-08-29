@@ -18,4 +18,12 @@ blogPostRoute.post(
 blogPostRoute.get('/', blogPostController.getAllPosts);
 blogPostRoute.get('/:id', blogPostValidation.postIdVerify, blogPostController.getByPk);
 
+blogPostRoute.put(
+  '/:id',
+  blogPostValidation.userVerify,
+  blogPostValidation.postIdVerify,
+  blogPostValidation.updateBodyValidation,
+  blogPostController.updatePost,
+);
+
 module.exports = blogPostRoute;

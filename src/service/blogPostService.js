@@ -36,4 +36,12 @@ const getByPk = async (id) => {
   return post;
 };
 
-module.exports = { createPost, categoryVerify, getAllPosts, getByPk };
+const updatePost = async ({ id, title, content }) => {
+  await BlogPost.update({ title, content }, { where: { id } });
+
+  const updatedPost = await getByPk(id);
+  
+  return updatedPost;
+};
+
+module.exports = { createPost, categoryVerify, getAllPosts, getByPk, updatePost };

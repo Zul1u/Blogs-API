@@ -55,4 +55,35 @@ const postIdVerify = async (req, res, next) => {
   }
 };
 
-module.exports = { bodyValidation, categoryVerify, postIdVerify };
+const userVerify = async (req, res, next) => {
+  try {
+    const post = await blogPostService.getByPk(req.params.id);
+    if (post.dataValues.userId !== req.userId) {
+      return res.status(401).json({ message: 'Unauthorized user' });
+    }
+
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const updateBlogPostSchema = Joi.object({
+  title: Joi.string().min(3).required().messages({
+    'string.empty': EMPTY_MESSAGE,
+    'string.min': EMPTY_MESSAGE,
+  }),
+  content: Joi.string().min(3).required().messages({
+    'string.empty': EMPTY_MESSAGE,
+    'string.min': EMPTY_MESSAGE,
+  }),
+});
+
+const updateBodyValidation = (req, res, next) => {
+  const { error } = updateBlogPostSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.message });
+  next();
+};
+
+module.exports = { bodyValidation, categoryVerify, postIdVerify, userVerify, updateBodyValidation };
