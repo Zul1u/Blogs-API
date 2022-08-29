@@ -1,7 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const PostCategory = sequelize.define('PostCategory', {
-    postId: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER,
+    postId: {
+      type:  DataTypes.INTEGER,
+      primaryKey: true,
+      foreignKey: true,
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      foreignKey: true,
+    },
   }, { timestamps: false });
 
   PostCategory.associate = (models) => {
