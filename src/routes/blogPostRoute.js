@@ -16,6 +16,7 @@ blogPostRoute.post(
 );
 
 blogPostRoute.get('/', blogPostController.getAllPosts);
+blogPostRoute.get('/search', blogPostController.search);
 blogPostRoute.get('/:id', blogPostValidation.postIdVerify, blogPostController.getByPk);
 
 blogPostRoute.put(
